@@ -1,6 +1,6 @@
 {
-  "name": "Remix: Inqom Gestion Focus Compte Pro into Banques",
-  "description": "Front end de Inqom Gestion, mais Compte Pro et Banques c\u0027est le même écran",
+  "name": "Compte Pro - Demo CENSE",
+  "description": "Front end de Inqom Gestion, mais Compte Pro et Banques c'est le même écran",
   "requestFramePermissions": [],
   "prompt": ""
 }

@@ -25,7 +25,7 @@ import {
   proAccountMembersConfig
 } from './config';
 
-import { QuestionMarkCircleIcon, CreditCardIcon, InformationCircleIcon, ClockIcon, FolderPlusIcon } from '../../constants/icons'; 
+import { QuestionMarkCircleIcon, CreditCardIcon, InformationCircleIcon, ClockIcon, FolderPlusIcon, EnvelopeIcon, DocumentTextIcon, UserGroupIcon, CheckCircleIcon } from '../../constants/icons'; 
 
 
 import { mockNotifications, addNotification } from '../../data/notifications';
@@ -339,8 +339,17 @@ const ProAccountMainPage: React.FC<ModuleComponentProps> = ({ onSubNavigate, act
   }
 
   if (!isActivated) {
+    const flow = [
+      { id: 'email', title: 'Identification du titulaire', description: 'Les informations du titulaire de compte', icon: EnvelopeIcon },
+      { id: 'org', title: 'Organisation', description: 'Détails de votre entreprise', icon: DocumentTextIcon },
+      { id: 'ubo', title: 'Bénéficiaires', description: 'Déclaration des bénéficiaires effectifs (UBO)', icon: UserGroupIcon },
+      { id: 'docs', title: 'Documents', description: 'Pièces justificatives', icon: FolderPlusIcon },
+      { id: 'id', title: 'Utilisateur', description: 'Création de l\'utilisateur chez notre partenaire', icon: InformationCircleIcon },
+      { id: 'success', title: 'Finalisation', description: 'Finalisation de la création de votre compte pro', icon: CheckCircleIcon }
+    ];
+
     return (
-      <div className="relative flex flex-col items-center justify-center h-full p-8 text-center bg-white rounded-xl shadow-sm border border-slate-200 m-6">
+      <div className="relative flex flex-col items-center justify-center h-full p-8 bg-white rounded-xl shadow-sm border border-slate-200 m-6 overflow-y-auto">
         {hasStartedOnboarding && (
           <button
             onClick={() => {
@@ -356,23 +365,58 @@ const ProAccountMainPage: React.FC<ModuleComponentProps> = ({ onSubNavigate, act
             Réinitialiser
           </button>
         )}
-        <div className="w-24 h-24 bg-theme-primary-50 rounded-full flex items-center justify-center mb-6">
-          <CreditCardIcon className="w-12 h-12 text-theme-primary-600" />
+        
+        <div className="max-w-7xl mx-auto w-full">
+          <h2 className={`text-3xl font-semibold text-slate-900 text-center mt-8 ${hasStartedOnboarding ? 'mb-16' : 'mb-2'}`}>
+            {hasStartedOnboarding ? "Reprenez la création de votre compte pro" : "Créez votre compte pro en 6 étapes"}
+          </h2>
+          {!hasStartedOnboarding && (
+            <p className="text-slate-500 mb-16 text-center">Ouvrez votre Compte Pro en quelques minutes. Complétez ces étapes pour activer votre compte et accéder à vos services.</p>
+          )}
+
+          <div className="flex justify-between items-start relative mb-16 px-8">
+            <div className="absolute top-8 left-24 right-24 h-[1px] bg-slate-200 -z-10"></div>
+            {flow.map((s, idx) => {
+              const isCurrent = hasStartedOnboarding && idx === savedStepIndex;
+              const isPast = hasStartedOnboarding && idx < savedStepIndex;
+              
+              return (
+                <div key={s.id} className="flex flex-col items-center flex-1 bg-white">
+                  <div className={`w-16 h-16 rounded-xl flex items-center justify-center mb-4 border ${
+                    isCurrent ? 'border-theme-primary-600 bg-theme-primary-50 shadow-sm ring-2 ring-theme-primary-100' : 
+                    isPast ? 'border-theme-primary-200 bg-white' : 
+                    !hasStartedOnboarding && idx === 0 ? 'border-theme-primary-200 bg-white shadow-sm' :
+                    'border-slate-200 bg-white'
+                  }`}>
+                    {s.icon && <s.icon className={`w-8 h-8 ${
+                      isCurrent || isPast || (!hasStartedOnboarding && idx === 0) ? 'text-theme-primary-600' : 'text-slate-400'
+                    }`} />}
+                  </div>
+                  <p className={`text-sm font-medium text-center px-2 ${
+                    isCurrent ? 'text-theme-primary-700 font-bold' : 
+                    isPast || (!hasStartedOnboarding && idx === 0) ? 'text-slate-900' : 'text-slate-500'
+                  }`}>
+                    {idx + 1}. {s.title}
+                  </p>
+                  {s.description && (
+                    <p className={`text-xs text-center px-2 mt-1 ${isCurrent ? 'text-theme-primary-600 font-medium' : 'text-slate-500'}`}>
+                      {s.description}
+                    </p>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="flex justify-center gap-4 mb-8">
+            <button
+              onClick={() => setIsOnboarding(true)}
+              className="px-8 py-3 bg-theme-primary-600 text-white font-medium rounded-lg hover:bg-theme-primary-700 transition-colors text-lg shadow-sm"
+            >
+              {hasStartedOnboarding ? "Reprendre" : "Commencer"}
+            </button>
+          </div>
         </div>
-        <h2 className="text-3xl font-semibold text-slate-900 mb-4">
-          {hasStartedOnboarding ? "Reprendre l'activation" : "Activez votre Compte Pro"}
-        </h2>
-        <p className="text-slate-600 max-w-lg mb-8 text-lg">
-          {hasStartedOnboarding 
-            ? "Vous avez commencé l'activation de votre Compte Pro. Reprenez là où vous vous étiez arrêté pour finaliser l'ouverture." 
-            : "Gérez vos finances, effectuez des virements et suivez vos dépenses en temps réel avec le Compte Pro Inqom."}
-        </p>
-        <button
-          onClick={() => setIsOnboarding(true)}
-          className="px-8 py-3 bg-theme-primary-600 text-white font-medium rounded-lg hover:bg-theme-primary-700 transition-colors shadow-sm text-lg"
-        >
-          {hasStartedOnboarding ? "Reprendre l'activation" : "Activer mon Compte Pro"}
-        </button>
       </div>
     );
   }

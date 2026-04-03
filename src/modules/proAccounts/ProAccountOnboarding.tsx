@@ -31,13 +31,12 @@ export const ProAccountOnboarding: React.FC<ProAccountOnboardingProps> = ({ onCo
   const requiresDocs = orgType === 'Association ou fondation' || hasForeignUBO;
 
   const flow = [
-    { id: 'intro' },
-    { id: 'email', title: 'Identification', description: 'Vos informations personnelles', icon: EnvelopeIcon },
+    { id: 'email', title: 'Identification du titulaire', description: 'Les informations du titulaire de compte', icon: EnvelopeIcon },
     { id: 'org', title: 'Organisation', description: 'Détails de votre entreprise', icon: DocumentTextIcon },
-    { id: 'ubo', title: 'Bénéficiaires', description: 'Déclaration des bénéficiaires', icon: UserGroupIcon },
+    { id: 'ubo', title: 'Bénéficiaires', description: 'Déclaration des bénéficiaires effectifs (UBO)', icon: UserGroupIcon },
     { id: 'docs', title: 'Documents', description: 'Pièces justificatives', icon: FolderPlusIcon },
-    { id: 'id', title: 'Vérification', description: 'Vérification d\'identité', icon: InformationCircleIcon },
-    { id: 'success' }
+    { id: 'id', title: 'Utilisateur', description: 'Création de l\'utilisateur chez notre partenaire', icon: InformationCircleIcon },
+    { id: 'success', title: 'Finalisation', description: 'Finalisation de la création de votre compte pro', icon: CheckCircleIcon }
   ];
 
   const currentStep = flow[stepIndex];
@@ -66,8 +65,6 @@ export const ProAccountOnboarding: React.FC<ProAccountOnboardingProps> = ({ onCo
   };
 
   const renderProgressBar = () => {
-    if (currentStep.id === 'success') return null;
-    
     return (
       <div className="flex border-b border-slate-200 mb-8">
         {visualSteps.map((s, idx) => (
@@ -88,46 +85,10 @@ export const ProAccountOnboarding: React.FC<ProAccountOnboardingProps> = ({ onCo
     );
   };
 
-  const renderIntro = () => (
-    <div className="max-w-5xl mx-auto mt-8">
-      <div className="max-w-3xl mx-auto">
-        {renderProgressBar()}
-      </div>
-      <h2 className="text-3xl font-semibold text-slate-900 mb-2 text-center mt-8">Créez votre compte pro en 5 étapes</h2>
-      <p className="text-slate-500 mb-16 text-center">Ouvrez votre Compte Pro en quelques minutes. Complétez ces étapes pour activer votre compte et accéder à vos services.</p>
 
-      <div className="flex justify-between items-start relative mb-16 px-8">
-        <div className="absolute top-8 left-24 right-24 h-[1px] bg-slate-200 -z-10"></div>
-        {visualSteps.map((s, idx) => (
-          <div key={s.id} className="flex flex-col items-center flex-1 bg-slate-50">
-            <div className={`w-16 h-16 rounded-xl flex items-center justify-center mb-4 border ${idx === 0 ? 'border-theme-primary-200 bg-white shadow-sm' : 'border-slate-200 bg-white'}`}>
-              {s.icon && <s.icon className={`w-8 h-8 ${idx === 0 ? 'text-theme-primary-600' : 'text-slate-400'}`} />}
-            </div>
-            <p className={`text-sm font-medium text-center px-2 ${idx === 0 ? 'text-slate-900' : 'text-slate-500'}`}>
-              {idx + 1}. {s.title}
-            </p>
-            {s.description && (
-              <p className="text-xs text-slate-500 text-center px-2 mt-1">
-                {s.description}
-              </p>
-            )}
-          </div>
-        ))}
-      </div>
-
-      <div className="flex justify-center gap-4">
-        <button
-          onClick={handleNext}
-          className="px-8 py-3 bg-theme-primary-600 text-white font-medium rounded-lg hover:bg-theme-primary-700 transition-colors text-lg shadow-sm"
-        >
-          Commencer
-        </button>
-      </div>
-    </div>
-  );
 
   const renderOrg = () => (
-    <div className="max-w-3xl mx-auto mt-8 flex flex-col min-h-[600px]">
+    <div className="max-w-5xl mx-auto mt-8 flex flex-col min-h-[600px]">
       {renderProgressBar()}
       <div>
         <h2 className="text-2xl font-semibold text-slate-900 mb-4">Informations de l'organisation</h2>
@@ -257,7 +218,7 @@ export const ProAccountOnboarding: React.FC<ProAccountOnboardingProps> = ({ onCo
   );
 
   const renderUbo = () => (
-    <div className="max-w-3xl mx-auto mt-8 flex flex-col min-h-[600px]">
+    <div className="max-w-5xl mx-auto mt-8 flex flex-col min-h-[600px]">
       {renderProgressBar()}
       <div>
         <h2 className="text-2xl font-semibold text-slate-900 mb-2">Déclarez les bénéficiaires effectifs</h2>
@@ -347,7 +308,7 @@ export const ProAccountOnboarding: React.FC<ProAccountOnboardingProps> = ({ onCo
 
   const renderDocs = () => {
     return (
-      <div className="max-w-3xl mx-auto mt-8 flex flex-col min-h-[600px]">
+      <div className="max-w-5xl mx-auto mt-8 flex flex-col min-h-[600px]">
         {renderProgressBar()}
         <div>
           <h2 className="text-2xl font-semibold text-slate-900 mb-2">Documents justificatifs</h2>
@@ -420,7 +381,7 @@ export const ProAccountOnboarding: React.FC<ProAccountOnboardingProps> = ({ onCo
   };
 
   const renderEmail = () => (
-    <div className="max-w-3xl mx-auto mt-8 flex flex-col min-h-[600px]">
+    <div className="max-w-5xl mx-auto mt-8 flex flex-col min-h-[600px]">
       {renderProgressBar()}
       <div>
         <h2 className="text-2xl font-semibold text-slate-900 mb-2">Identification du titulaire</h2>
@@ -485,19 +446,15 @@ export const ProAccountOnboarding: React.FC<ProAccountOnboardingProps> = ({ onCo
   );
 
   const renderId = () => (
-    <div className="max-w-3xl mx-auto mt-8 flex flex-col min-h-[600px]">
+    <div className="max-w-5xl mx-auto mt-8 flex flex-col min-h-[600px]">
       {renderProgressBar()}
       <div className="flex flex-col items-center justify-center text-center mt-4 bg-white p-10 rounded-2xl shadow-sm border border-slate-200 mb-4">
         <div className="w-16 h-16 bg-theme-primary-50 rounded-2xl flex items-center justify-center mb-6">
           <InformationCircleIcon className="w-8 h-8 text-theme-primary-600" />
         </div>
-        <h2 className="text-2xl font-semibold text-slate-900 mb-4">Vérification d'identité</h2>
-        <p className="text-slate-600 mb-8 max-w-md">
-          Conformément à la réglementation, la vérification de l'identité du titulaire est requise avant de pouvoir autoriser l'ouverture du compte. L'analyse de votre dossier par notre partenaire débutera uniquement une fois cette étape validée.
-        </p>
-
-        <p className="text-sm text-slate-500">
-          En cliquant sur "Démarrer la vérification d'identité", vous acceptez les <a href="#" className="text-theme-primary-600 hover:underline">Conditions générales</a>.
+        <h2 className="text-2xl font-semibold text-slate-900 mb-4">Création de l'utilisateur</h2>
+        <p className="text-slate-600 max-w-md">
+          Afin de pouvoir finaliser la création de votre compte, nous devons procéder à la création de votre profil utilisateur. Vous allez être redirigé vers notre partenaire Swan pour cette étape.
         </p>
       </div>
 
@@ -522,7 +479,7 @@ export const ProAccountOnboarding: React.FC<ProAccountOnboardingProps> = ({ onCo
             }} 
             className="px-6 py-2.5 bg-theme-primary-600 text-white font-medium rounded-lg hover:bg-theme-primary-700 transition-colors"
           >
-            Démarrer la vérification d'identité
+            Procéder à la création de l'utilisateur
           </button>
         </div>
       </div>
@@ -530,24 +487,36 @@ export const ProAccountOnboarding: React.FC<ProAccountOnboardingProps> = ({ onCo
   );
 
   const renderSuccess = () => (
-    <div className="relative flex flex-col items-center justify-center h-full p-8 text-center bg-white rounded-xl shadow-sm border border-slate-200 m-6">
-      <div className="w-24 h-24 bg-emerald-50 rounded-full flex items-center justify-center mb-8">
-        <CheckCircleIcon className="w-12 h-12 text-emerald-500" />
-      </div>
-      
-      <h2 className="text-3xl font-semibold text-slate-900 mb-4">Demande d'ouverture de compte envoyée</h2>
-      <p className="text-slate-600 mb-12 max-w-lg text-lg">
-        Vos informations ont été transmises avec succès. Notre partenaire va maintenant analyser votre dossier et vos pièces justificatives. Vous serez notifié par e-mail dès que l'ouverture de votre compte sera finalisée.
-      </p>
+    <div className="max-w-5xl mx-auto mt-8 flex flex-col min-h-[600px]">
+      {renderProgressBar()}
+      <div className="flex flex-col items-center justify-center text-center mt-4 bg-white p-10 rounded-2xl shadow-sm border border-slate-200 mb-4">
+        <div className="w-24 h-24 bg-emerald-50 rounded-full flex items-center justify-center mb-8">
+          <CheckCircleIcon className="w-12 h-12 text-emerald-500" />
+        </div>
+        
+        <h2 className="text-3xl font-semibold text-slate-900 mb-4">Finalisation du compte</h2>
+        <p className="text-slate-600 mb-8 max-w-lg text-lg">
+          Vous y êtes presque ! Il reste à finaliser l'onboarding pour tout transmettre à notre partenaire Swan et valider la demande de création de compte pro. Vous serez notifié par e-mail dès que l'ouverture de votre compte sera finalisée.
+        </p>
 
-      <button
-        onClick={() => {
-          onComplete();
-        }}
-        className="px-8 py-3 bg-theme-primary-600 text-white font-medium rounded-lg hover:bg-theme-primary-700 transition-colors shadow-sm"
-      >
-        Terminer
-      </button>
+        <p className="text-sm text-slate-500">
+          En cliquant sur "Finaliser", vous acceptez les <a href="#" className="text-theme-primary-600 hover:underline">Conditions générales</a>.
+        </p>
+      </div>
+
+      <div className="flex justify-between items-center mt-auto pt-4">
+        <button onClick={handlePrev} className="px-6 py-2.5 bg-white border border-slate-300 text-slate-700 font-medium rounded-lg hover:bg-slate-50 transition-colors">
+          Précédent
+        </button>
+        <button
+          onClick={() => {
+            onComplete();
+          }}
+          className="px-8 py-3 bg-theme-primary-600 text-white font-medium rounded-lg hover:bg-theme-primary-700 transition-colors shadow-sm"
+        >
+          Finaliser
+        </button>
+      </div>
     </div>
   );
 
@@ -565,7 +534,6 @@ export const ProAccountOnboarding: React.FC<ProAccountOnboardingProps> = ({ onCo
       </div>
       
       <div className="flex-1 overflow-y-auto pb-24">
-        {currentStep.id === 'intro' && renderIntro()}
         {currentStep.id === 'email' && renderEmail()}
         {currentStep.id === 'org' && renderOrg()}
         {currentStep.id === 'ubo' && renderUbo()}

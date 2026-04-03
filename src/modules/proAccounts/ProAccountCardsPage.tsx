@@ -71,40 +71,37 @@ const ProAccountCardsPage: React.FC<ModuleComponentProps> = ({ onSubNavigate }) 
           </div>
 
           {/* Revealed Card */}
-          <div className="w-[400px] h-[240px] bg-slate-900 text-white relative rounded-xl overflow-hidden shadow-2xl mb-12">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-white opacity-5 rounded-full -translate-y-1/2 translate-x-1/3"></div>
-            <div className="absolute bottom-0 left-0 w-40 h-40 bg-white opacity-5 rounded-full translate-y-1/3 -translate-x-1/4"></div>
-
-            <div className="absolute top-6 right-6 bg-white text-slate-900 text-[10px] font-bold px-2 py-1 rounded flex items-center gap-1">
-              <div className="w-3 h-3 bg-red-600"></div>
-              <div className="w-3 h-3 bg-black"></div>
-              <span>LOGO</span>
+          <div className="w-[400px] h-[240px] bg-[#222325] text-white relative rounded-xl overflow-hidden shadow-2xl mb-12 border border-slate-700">
+            <div className="absolute top-6 left-6">
+              <h4 className="text-sm font-medium text-slate-100">{revealedCard.cardholderName}</h4>
+            </div>
+            
+            <div className="absolute top-6 right-6">
+              <span className="text-2xl font-bold tracking-tight text-white">swan</span>
             </div>
             
             <div className="absolute bottom-6 right-6 flex">
-              <div className="w-10 h-10 rounded-full bg-red-500 opacity-90 z-10 mix-blend-multiply"></div>
-              <div className="w-10 h-10 rounded-full bg-yellow-500 opacity-90 -ml-4 z-0 mix-blend-multiply"></div>
+              <div className="w-10 h-10 rounded-full bg-[#EB001B] opacity-90 z-10 mix-blend-multiply"></div>
+              <div className="w-10 h-10 rounded-full bg-[#F79E1B] opacity-90 -ml-4 z-0 mix-blend-multiply"></div>
             </div>
 
-            <div className="absolute bottom-8 left-8 right-8">
-              <h4 className="text-sm font-medium mb-4 text-slate-100">{revealedCard.cardholderName}</h4>
-              <div className="flex flex-col gap-3 mb-3">
-                <div className="flex items-center">
-                  <p className="text-2xl font-mono tracking-widest text-white">
-                    1234 5678 9012 34{revealedCard.last4Digits}
-                  </p>
-                  <Copy className="w-4 h-4 ml-3 text-slate-400 hover:text-white cursor-pointer transition-colors" />
-                </div>
+            <div className="absolute top-1/2 left-6 right-6 -translate-y-1/2 mt-4">
+              <div className="flex items-center">
+                <p className="text-2xl font-mono tracking-widest text-white">
+                  1234 5678 9012 34{revealedCard.last4Digits}
+                </p>
+                <Copy className="w-4 h-4 ml-3 text-slate-400 hover:text-white cursor-pointer transition-colors" />
               </div>
-              <div className="flex items-center gap-6 text-sm text-slate-300 font-mono">
-                <div className="flex items-center">
-                  {revealedCard.expiryDate}
-                  <Copy className="w-3.5 h-3.5 ml-2 text-slate-400 hover:text-white cursor-pointer transition-colors" />
-                </div>
-                <div className="flex items-center">
-                  CVC 123
-                  <Copy className="w-3.5 h-3.5 ml-2 text-slate-400 hover:text-white cursor-pointer transition-colors" />
-                </div>
+            </div>
+
+            <div className="absolute bottom-6 left-6 flex items-center gap-6 text-sm text-slate-300 font-mono">
+              <div className="flex items-center">
+                {revealedCard.expiryDate}
+                <Copy className="w-3.5 h-3.5 ml-2 text-slate-400 hover:text-white cursor-pointer transition-colors" />
+              </div>
+              <div className="flex items-center">
+                CVC 123
+                <Copy className="w-3.5 h-3.5 ml-2 text-slate-400 hover:text-white cursor-pointer transition-colors" />
               </div>
             </div>
           </div>
@@ -171,37 +168,29 @@ const ProAccountCardsPage: React.FC<ModuleComponentProps> = ({ onSubNavigate }) 
             return (
               <div key={card.id} className="bg-white shadow-sm rounded-xl overflow-hidden flex flex-col border border-slate-200">
                 {/* Visual Card */}
-                <div className="p-6 bg-slate-900 text-white relative h-52">
-                  {/* Decorative background elements */}
-                  <div className="absolute top-0 right-0 w-64 h-64 bg-white opacity-5 rounded-full -translate-y-1/2 translate-x-1/3"></div>
-                  <div className="absolute bottom-0 left-0 w-40 h-40 bg-white opacity-5 rounded-full translate-y-1/3 -translate-x-1/4"></div>
-
-                  {/* Logo Placeholder (Top Right) */}
-                  <div className="absolute top-6 right-6 bg-white text-slate-900 text-[10px] font-bold px-2 py-1 rounded flex items-center gap-1">
-                    <div className="w-3 h-3 bg-red-600"></div>
-                    <div className="w-3 h-3 bg-black"></div>
-                    <span>LOGO</span>
+                <div className="p-6 bg-[#222325] text-white relative h-52 border-b border-slate-700">
+                  <div className="absolute top-6 left-6">
+                    <h4 className="text-sm font-medium text-slate-100">{card.cardholderName}</h4>
                   </div>
                   
-                  {/* Mastercard Logo (Bottom Right) */}
+                  <div className="absolute top-5 right-6">
+                    <span className="text-2xl font-bold tracking-tight text-white">swan</span>
+                  </div>
+                  
                   <div className="absolute bottom-6 right-6 flex">
-                    <div className="w-8 h-8 rounded-full bg-red-500 opacity-90 z-10 mix-blend-multiply"></div>
-                    <div className="w-8 h-8 rounded-full bg-yellow-500 opacity-90 -ml-3 z-0 mix-blend-multiply"></div>
+                    <div className="w-8 h-8 rounded-full bg-[#EB001B] opacity-90 z-10 mix-blend-multiply"></div>
+                    <div className="w-8 h-8 rounded-full bg-[#F79E1B] opacity-90 -ml-3 z-0 mix-blend-multiply"></div>
                   </div>
 
-                  {/* Card Details */}
-                  <div className="absolute bottom-6 left-6 right-6">
-                    <h4 className="text-sm font-medium mb-2 text-slate-100">{card.cardholderName} - {card.type === 'Physique' ? 'Carte Pro' : 'Service Marketing'}</h4>
-                    <div className="flex flex-col gap-2 mb-2">
-                      <div className="flex items-center justify-between">
-                        <p className="text-xl font-mono tracking-widest text-white">
-                          12** **** **** **{card.last4Digits}
-                        </p>
-                      </div>
-                    </div>
-                    <p className="text-xs text-slate-400 font-mono">
-                      {card.expiryDate} - CVC ***
+                  <div className="absolute top-1/2 left-6 right-6 -translate-y-1/2 mt-2">
+                    <p className="text-xl font-mono tracking-widest text-white">
+                      1234 12•• •••• {card.last4Digits}
                     </p>
+                  </div>
+
+                  <div className="absolute bottom-6 left-6 flex items-center gap-6 text-sm text-slate-300 font-mono">
+                    <p>{card.expiryDate}</p>
+                    <p>CVC •••</p>
                   </div>
                 </div>
 
